@@ -11,58 +11,76 @@ class EventController {
     const { title, date, content } = req.body;
     console.log("Received data:", title, date, content);
 
-    const image = req.file;
+    const images = req.files; // Use req.files to get an array of uploaded images
 
-    // Check if the image is missing
-    if (!image) {
-      console.error("Image file is required");
-      return res.status(400).json({
-        data: null,
-        success: false,
-        errors: { message: "Image file is required" },
-      });
-    }
-
-    // Define the file path to save the uploaded image
-    const imagePath = `uploads/${image.originalname}`;
-
-    // Write the image to the server's file system
-    fs.writeFile(imagePath, image.buffer, (err) => {
-      if (err) {
-        console.error("Error saving image:", err);
-        return res.status(500).json({
-          data: null,
-          success: false,
-          errors: { message: "Error adding event" },
-        });
-      }
-
-      // Insert the event data into the database with the image file path
-      EventModel.addEvent(imagePath, title, date, content, (err, result) => {
-        if (err) {
-          console.error("MySQL Error:", err);
-          return res.status(500).json({
+    // Check if there are no images
+    if (!images || images.length === 0) {
+        console.error("Image files are required");
+        return res.status(400).json({
             data: null,
             success: false,
-            errors: { message: "Error adding event to the database" },
-          });
-        }
-
-        console.log("Event added successfully");
-        const eventData = {
-          title,
-          date,
-          content,
-          image_path: imagePath,
-        };
-        return res.status(200).json({
-          data: eventData,
-          success: true,
-          errors: {},
+            errors: { message: "Image files are required" },
         });
-      });
-    });
-  }
+    }
+
+    // Define an array to store the file paths of the uploaded images
+    const imagePaths = [];
+
+    // Define a function to handle image upload and database insertion for each image
+    const processImage = (index) => {
+        if (index === images.length) {
+            // All images have been processed, insert event data into the database
+            EventModel.addEvent(imagePaths, title, date, content, (err, result) => {
+                if (err) {
+                    console.error("MySQL Error:", err);
+                    return res.status(500).json({
+                        data: null,
+                        success: false,
+                        errors: { message: "Error adding event to the database" },
+                    });
+                }
+
+                console.log("Event added successfully");
+                const eventData = {
+                    title,
+                    date,
+                    content,
+                    image_paths: imagePaths, // Store multiple image paths in an array
+                };
+                return res.status(200).json({
+                    data: eventData,
+                    success: true,
+                    errors: {},
+                });
+            });
+        } else {
+            const image = images[index];
+            const imagePath = `uploads/${image.originalname}`;
+
+            // Write the image to the server's file system
+            fs.writeFile(imagePath, image.buffer, (err) => {
+                if (err) {
+                    console.error("Error saving image:", err);
+                    return res.status(500).json({
+                        data: null,
+                        success: false,
+                        errors: { message: "Error adding event" },
+                    });
+                }
+
+                // Add the image path to the array
+                imagePaths.push(imagePath);
+
+                // Process the next image
+                processImage(index + 1);
+            });
+        }
+    };
+
+    // Start processing images from index 0
+    processImage(0);
+}
+
 
  
   static getEvents(req, res) {

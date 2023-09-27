@@ -9,7 +9,7 @@ class EventModel {
 
     dbConnection.query(
       insertEventQuery,
-      [imagePath, title, date, content],
+      [JSON.stringify(imagePath), title, date, content],
       callback
     );
   }
