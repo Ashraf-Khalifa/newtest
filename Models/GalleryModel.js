@@ -24,7 +24,7 @@ class GalleryModel {
       DELETE FROM gallery
       WHERE id = ?
     `;
-  
+
     dbConnection.query(deleteImageQuery, [imageId], callback);
   }
 }
