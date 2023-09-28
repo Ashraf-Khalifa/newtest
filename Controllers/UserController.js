@@ -55,6 +55,26 @@ class UserController {
       return res.status(200).json({ message: "User deleted successfully" });
     });
   }
+
+
+  static async countUsers(req, res) {
+    UserModel.countUsers((err, count) => {
+      if (err) {
+        console.error("Database Error:", err);
+        return res.status(500).json({
+          data: null,
+          success: false,
+          errors: { message: "An error occurred" },
+        });
+      }
+  
+      return res.status(200).json({
+        data: count,
+        success: true,
+        errors: {},
+      });
+    });
+  }
 }
 
 module.exports = UserController;

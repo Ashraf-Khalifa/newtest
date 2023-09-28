@@ -46,6 +46,16 @@ class UserModel {
 
     dbConnection.query(userInfoQuery, values, callback);
   }
+
+  static countUsers(callback) {
+    const countUsersQuery = `
+      SELECT COUNT(*) AS count FROM users
+    `;
+
+    dbConnection.query(countUsersQuery, callback);
+  }
 }
+
+
 
 module.exports = UserModel;
