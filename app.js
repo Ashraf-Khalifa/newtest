@@ -7,11 +7,13 @@ const app = express();
 
 // Use the 'morgan' middleware for logging HTTP requests
 app.use(morgan("dev"));
-app.use(cors({
-  methods: ["GET", "POST", "PUT", "DELETE"], // Include DELETE here
-  allowedHeaders: ["Content-Type"], // Allow the Content-Type header
-}));
-app.options('*', cors()); // Enable CORS for all routes that support OPTIONS
+app.use(
+  cors({
+    methods: ["GET", "POST", "PUT", "DELETE"], // Include DELETE here
+    allowedHeaders: ["Content-Type"], // Allow the Content-Type header
+  })
+);
+app.options("*", cors()); // Enable CORS for all routes that support OPTIONS
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

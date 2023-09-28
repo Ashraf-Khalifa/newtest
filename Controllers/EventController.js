@@ -15,11 +15,12 @@ class EventController {
 
     // Check if there are no images
     if (!images || images.length === 0) {
-        console.error("Image files are required");
+        const errorMessage = "Image files are required";
+        console.error(errorMessage);
         return res.status(400).json({
             data: null,
             success: false,
-            errors: { message: "Image files are required" },
+            errors: { message: errorMessage },
         });
     }
 
@@ -32,11 +33,12 @@ class EventController {
             // All images have been processed, insert event data into the database
             EventModel.addEvent(imagePaths, title, date, content, (err, result) => {
                 if (err) {
-                    console.error("MySQL Error:", err);
+                    const errorMessage = "Error adding event to the database";
+                    console.error(errorMessage, err);
                     return res.status(500).json({
                         data: null,
                         success: false,
-                        errors: { message: "Error adding event to the database" },
+                        errors: { message: errorMessage },
                     });
                 }
 
@@ -60,11 +62,12 @@ class EventController {
             // Write the image to the server's file system
             fs.writeFile(imagePath, image.buffer, (err) => {
                 if (err) {
-                    console.error("Error saving image:", err);
+                    const errorMessage = `Error saving image ${index + 1}`;
+                    console.error(errorMessage, err);
                     return res.status(500).json({
                         data: null,
                         success: false,
-                        errors: { message: "Error adding event" },
+                        errors: { message: errorMessage },
                     });
                 }
 
@@ -72,6 +75,7 @@ class EventController {
                 imagePaths.push(imagePath);
 
                 // Process the next image
+                console.log(`Image ${index + 1} saved to ${imagePath}`);
                 processImage(index + 1);
             });
         }
@@ -79,7 +83,7 @@ class EventController {
 
     // Start processing images from index 0
     processImage(0);
-}
+  }
 
 
  
