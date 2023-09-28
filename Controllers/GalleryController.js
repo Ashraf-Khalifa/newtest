@@ -84,23 +84,28 @@ class GalleryController {
 
   static deleteImage(req, res) {
     const imageId = parseInt(req.params.imageId, 10);
-
+  
     // Delete the image from the server's file system
-    GalleryModel.getImagePath(imageId, (err, imagePath) => {
+    GalleryModel.getImagePaths((err, imagePaths) => {
       if (err) {
         console.error("MySQL Error:", err);
         return res.status(500).json({
           data: null,
           success: false,
-          errors: { message: "Error getting image path" },
+          errors: { message: "Error getting image paths" },
         });
       }
-
-      if (!imagePath) {
+  
+      // Find the image path with the matching ID
+      const imagePathInfo = imagePaths.find((imageInfo) => imageInfo.id === imageId);
+  
+      if (!imagePathInfo) {
         // No image found with the specified ID
         return res.status(404).json({ message: 'Image not found' });
       }
-
+  
+      const imagePath = imagePathInfo.image_path;
+  
       fs.unlink(imagePath, (unlinkErr) => {
         if (unlinkErr) {
           console.error("Error deleting image file:", unlinkErr);
@@ -110,8 +115,8 @@ class GalleryController {
             errors: { message: "Error deleting image file" },
           });
         }
-
-        // Delete the image path from the database
+  
+        // Delete the image from the database
         GalleryModel.deleteImage(imageId, (dbErr, result) => {
           if (dbErr) {
             console.error("MySQL Error:", dbErr);
@@ -121,14 +126,14 @@ class GalleryController {
               errors: { message: "Error deleting image from the database" },
             });
           }
-
+  
           if (result.affectedRows === 0) {
             // No image found with the specified ID
             return res.status(404).json({ message: 'Image not found' });
           }
-
-          console.log("Image deleted successfully");
-          return res.status(200).json({ message: 'Image deleted successfully' });
+  
+          console.log(`Image with ID ${imageId} deleted successfully`);
+          return res.status(200).json({ message: `Image with ID ${imageId} deleted successfully` });
         });
       });
     });
