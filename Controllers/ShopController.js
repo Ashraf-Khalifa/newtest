@@ -94,6 +94,84 @@ class ShopController {
       });
     });
   }
+
+  static deleteShop(req, res) {
+    const shopId = parseInt(req.params.shopId, 10);
+
+    ShopModel.deleteShop(shopId, (err, result) => {
+      if (err) {
+        console.error("MySQL Error:", err);
+        return res.status(500).json({
+          data: null,
+          success: false,
+          errors: { message: "Error deleting shop from the database" },
+        });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: "Shop not found" });
+      }
+
+      console.log("Shop deleted successfully");
+      res.status(200).json({ message: "Shop deleted successfully" });
+    });
+  }
+
+  static updateShop(req, res) {
+    const shopId = parseInt(req.params.shopId, 10);
+    const { title, price, content } = req.body;
+    const image = req.file;
+
+    if (!image) {
+      console.error("Image file is required");
+      return res.status(400).json({
+        data: null,
+        success: false,
+        errors: { message: "Image file is required" },
+      });
+    }
+
+    const imagePath = `uploads/${image.originalname}`;
+
+    fs.writeFile(imagePath, image.buffer, (err) => {
+      if (err) {
+        console.error("Error saving image:", err);
+        return res.status(500).json({
+          data: null,
+          success: false,
+          errors: { message: "Error updating shop" },
+        });
+      }
+
+      ShopModel.updateShop(shopId, imagePath, title, price, content, (err, result) => {
+        if (err) {
+          console.error("MySQL Error:", err);
+          return res.status(500).json({
+            data: null,
+            success: false,
+            errors: { message: "Error updating shop in the database" },
+          });
+        }
+
+        if (result.affectedRows === 0) {
+          return res.status(404).json({ message: "Shop not found" });
+        }
+
+        console.log("Shop updated successfully");
+        const shopData = {
+          title,
+          price,
+          content,
+          image_path: imagePath,
+        };
+        return res.status(200).json({
+          data: shopData,
+          success: true,
+          errors: {},
+        });
+      });
+    });
+  }
 }
 
 module.exports = ShopController;
