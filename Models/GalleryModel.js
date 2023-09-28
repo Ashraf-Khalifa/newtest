@@ -18,6 +18,15 @@ class GalleryModel {
 
     dbConnection.query(selectImagePathsQuery, callback);
   }
+
+  static deleteImage(imageId, callback) {
+    const deleteImageQuery = `
+      DELETE FROM gallery
+      WHERE id = ?
+    `;
+  
+    dbConnection.query(deleteImageQuery, [imageId], callback);
+  }
 }
 
 module.exports = GalleryModel;

@@ -12,5 +12,7 @@ const upload = multer({ storage });
 // Routes for gallery-related actions
 router.post("/upload", upload.single("image"), GalleryController.uploadImage); // Updated route for gallery
 router.get("/images", GalleryController.getImagePaths); // Updated route for gallery
+router.delete("/delete/:id", GalleryController.deleteImage);
+
 
 module.exports = router;

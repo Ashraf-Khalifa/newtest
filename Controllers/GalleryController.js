@@ -75,6 +75,31 @@ class GalleryController {
       });
     });
   }
-}
-
+  static deleteImage(req, res) {
+    const imageId = parseInt(req.params.id, 10);
+  
+    // Call the GalleryModel method to delete the image by its ID
+    GalleryModel.deleteImage(imageId, (err, result) => {
+      if (err) {
+        console.error("Error deleting image:", err);
+        return res.status(500).json({
+          data: null,
+          success: false,
+          errors: { message: "Error deleting image" },
+        });
+      }
+  
+      if (result.affectedRows === 0) {
+        // No image found with the specified ID
+        return res.status(404).json({ message: 'Image not found' });
+      }
+  
+      // You can also delete the associated image file from the server if needed
+      // Make sure to handle this operation securely
+  
+      console.log("Image deleted successfully");
+      res.status(200).json({ message: 'Image deleted successfully' });
+    });
+  }
+}  
 module.exports = GalleryController;
