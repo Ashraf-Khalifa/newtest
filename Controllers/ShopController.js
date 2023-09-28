@@ -78,14 +78,17 @@ class ShopController {
 
       results.forEach((shop) => {
         const shopDetails = {
+          id: shop.id, // Include the ID property
           title: shop.title,
           price: shop.price,
           content: shop.content,
           image_path: shop.image,
         };
-
+      
         shopDetailsArray.push(shopDetails);
       });
+      
+      
 
       return res.status(200).json({
         data: shopDetailsArray,
