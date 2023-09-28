@@ -1,95 +1,54 @@
 const EventModel = require("../Models/EventModel");
-const fs = require("fs");
-
-
+const fs = require("fs").promises; // Use the Promises version of fs
 
 class EventController {
-  static addEvent(req, res) {
-    console.log("Received request to add an event.");
+  static async addEvent(req, res) {
+    try {
+      console.log("Received request to add an event.");
+      const { title, date, content } = req.body;
 
-    // Extract data from the request
-    const { title, date, content } = req.body;
-    console.log("Received data:", title, date, content);
+      const images = req.files;
 
-    const images = req.files; // Use req.files to get an array of uploaded images
+      if (!images || images.length === 0) {
+        throw new Error("Image files are required");
+      }
 
-    // Check if there are no images
-    if (!images || images.length === 0) {
-        const errorMessage = "Image files are required";
-        console.error(errorMessage);
-        return res.status(400).json({
-            data: null,
-            success: false,
-            errors: { message: errorMessage },
-        });
+      const imagePaths = [];
+
+      for (let i = 0; i < images.length; i++) {
+        const image = images[i];
+        const imagePath = `uploads/${image.originalname}`;
+
+        await fs.writeFile(imagePath, image.buffer);
+
+        imagePaths.push(imagePath);
+      }
+
+      const eventData = {
+        title,
+        date,
+        content,
+        image_paths: imagePaths,
+      };
+
+      // Assuming EventModel.addEvent is an async function
+      await EventModel.addEvent(imagePaths, title, date, content);
+
+      console.log("Event added successfully");
+      res.status(200).json({
+        data: eventData,
+        success: true,
+        errors: {},
+      });
+    } catch (error) {
+      console.error("Error adding event:", error);
+      res.status(500).json({
+        data: null,
+        success: false,
+        errors: { message: "Error adding event" },
+      });
     }
-
-    // Define an array to store the file paths of the uploaded images
-    const imagePaths = [];
-
-    // Define a function to handle image upload and database insertion for each image
-    const processImage = (index) => {
-        if (index === images.length) {
-            // All images have been processed, insert event data into the database
-            EventModel.addEvent(imagePaths, title, date, content, (err, result) => {
-                if (err) {
-                    const errorMessage = "Error adding event to the database";
-                    console.error(errorMessage, err);
-
-                    // Log Axios error details and server response data and status
-                    console.error("AxiosError:", err);
-                    console.error("Server Response Data:", err.response.data);
-                    console.error("Server Response Status:", err.response.status);
-
-                    return res.status(500).json({
-                        data: null,
-                        success: false,
-                        errors: { message: errorMessage },
-                    });
-                }
-
-                console.log("Event added successfully");
-                const eventData = {
-                    title,
-                    date,
-                    content,
-                    image_paths: imagePaths, // Store multiple image paths in an array
-                };
-                return res.status(200).json({
-                    data: eventData,
-                    success: true,
-                    errors: {},
-                });
-            });
-        } else {
-            const image = images[index];
-            const imagePath = `uploads/${image.originalname}`;
-
-            // Write the image to the server's file system
-            fs.writeFile(imagePath, image.buffer, (err) => {
-                if (err) {
-                    const errorMessage = `Error saving image ${index + 1}`;
-                    console.error(errorMessage, err);
-                    return res.status(500).json({
-                        data: null,
-                        success: false,
-                        errors: { message: errorMessage },
-                    });
-                }
-
-                // Add the image path to the array
-                imagePaths.push(imagePath);
-
-                // Process the next image
-                console.log(`Image ${index + 1} saved to ${imagePath}`);
-                processImage(index + 1);
-            });
-        }
-    };
-
-    // Start processing images from index 0
-    processImage(0);
-}
+  }
 
 
 
