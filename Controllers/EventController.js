@@ -35,6 +35,12 @@ class EventController {
                 if (err) {
                     const errorMessage = "Error adding event to the database";
                     console.error(errorMessage, err);
+
+                    // Log Axios error details and server response data and status
+                    console.error("AxiosError:", err);
+                    console.error("Server Response Data:", err.response.data);
+                    console.error("Server Response Status:", err.response.status);
+
                     return res.status(500).json({
                         data: null,
                         success: false,
@@ -83,7 +89,8 @@ class EventController {
 
     // Start processing images from index 0
     processImage(0);
-  }
+}
+
 
 
  
