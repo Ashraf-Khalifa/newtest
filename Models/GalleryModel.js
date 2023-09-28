@@ -12,10 +12,10 @@ class GalleryModel {
 
   static getImagePaths(callback) {
     const selectImagePathsQuery = `
-      SELECT image_path
+      SELECT id, image_path
       FROM gallery
     `;
-
+  
     dbConnection.query(selectImagePathsQuery, callback);
   }
 

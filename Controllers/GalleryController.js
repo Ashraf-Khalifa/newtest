@@ -66,8 +66,13 @@ class GalleryController {
           errors: { message: "Error fetching image paths" },
         });
       }
-
-      const imagePaths = results.map((result) => result.image_path);
+  
+      // Map the results to include id and image_path
+      const imagePaths = results.map((result) => ({
+        id: result.id,
+        image_path: result.image_path,
+      }));
+  
       return res.status(200).json({
         data: imagePaths,
         success: true,
@@ -75,6 +80,7 @@ class GalleryController {
       });
     });
   }
+  
 
   static deleteImage(req, res) {
     const imageId = parseInt(req.params.imageId, 10);
