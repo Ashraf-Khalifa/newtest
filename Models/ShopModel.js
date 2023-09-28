@@ -9,14 +9,14 @@ class ShopModel {
 
     dbConnection.query(
       insertShopQuery,
-      [imagePath, title, price, content],
+      [JSON.stringify(imagePath), title, price, content],
       callback
     );
   }
 
   static getShops(callback) {
     const selectShopQuery = `
-      SELECT title, price, content, image
+    SELECT id, title, price, content, image
       FROM shop
     `;
 
