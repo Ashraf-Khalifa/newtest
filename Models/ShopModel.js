@@ -1,23 +1,23 @@
 const dbConnection = require("../config");
 
 class ShopModel {
-  static addItem(imagePath, title, price, content, callback) {
+  static addItem(image, title, price, content, callback) {
     const insertItemQuery = `
-      INSERT INTO shop_items (image_path, title, price, content)
+      INSERT INTO shop (image, title, price, content)
       VALUES (?, ?, ?, ?)
     `;
 
     dbConnection.query(
       insertItemQuery,
-      [JSON.stringify(imagePath), title, price, content],
+      [JSON.stringify(image), title, price, content],
       callback
     );
   }
 
   static getItems(callback) {
     const selectItemsQuery = `
-      SELECT id, title, price, content, image_path
-      FROM shop_items
+      SELECT id, title, price, content, image
+      FROM shop
     `;
 
     dbConnection.query(selectItemsQuery, callback);
@@ -25,23 +25,23 @@ class ShopModel {
 
   static deleteItem(itemId, callback) {
     const deleteItemQuery = `
-      DELETE FROM shop_items
+      DELETE FROM shop
       WHERE id = ?
     `;
 
     dbConnection.query(deleteItemQuery, [itemId], callback);
   }
 
-  static updateItem(itemId, imagePath, title, price, content, callback) {
+  static updateItem(itemId, image, title, price, content, callback) {
     const updateItemQuery = `
-      UPDATE shop_items
-      SET image_path = ?, title = ?, price = ?, content = ?
+      UPDATE shop
+      SET image = ?, title = ?, price = ?, content = ?
       WHERE id = ?
     `;
 
     dbConnection.query(
       updateItemQuery,
-      [imagePath, title, price, content, itemId],
+      [image, title, price, content, itemId],
       callback
     );
   }
