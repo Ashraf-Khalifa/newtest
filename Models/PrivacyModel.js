@@ -1,31 +1,47 @@
+// PrivacyPolicyModel.js
 const dbConnection = require("../config");
 
-class PrivacyModel {
+class PrivacyPolicyModel {
   static addPrivacyPolicy(title, content, callback) {
-    const insertPrivacyQuery = `
+    const insertPrivacyPolicyQuery = `
       INSERT INTO privacy_policy (title, content)
       VALUES (?, ?)
     `;
 
-    dbConnection.query(
-      insertPrivacyQuery,
-      [title, content],
-      (err, result) => {
-        callback(err, result);
-      }
-    );
+    dbConnection.query(insertPrivacyPolicyQuery, [title, content], callback);
   }
 
-  static getAllPrivacyPolicies(callback) {
-    const selectPrivacyQuery = `
-      SELECT title, content
+  static getPrivacyPolicies(callback) {
+    const selectPrivacyPoliciesQuery = `
+      SELECT id, title, content
       FROM privacy_policy
     `;
 
-    dbConnection.query(selectPrivacyQuery, (err, results) => {
-      callback(err, results);
-    });
+    dbConnection.query(selectPrivacyPoliciesQuery, callback);
+  }
+
+  static deletePrivacyPolicy(policyId, callback) {
+    const deletePrivacyPolicyQuery = `
+      DELETE FROM privacy_policy
+      WHERE id = ?
+    `;
+
+    dbConnection.query(deletePrivacyPolicyQuery, [policyId], callback);
+  }
+
+  static updatePrivacyPolicy(policyId, title, content, callback) {
+    const updatePrivacyPolicyQuery = `
+      UPDATE privacy_policy
+      SET title = ?, content = ?
+      WHERE id = ?
+    `;
+
+    dbConnection.query(
+      updatePrivacyPolicyQuery,
+      [title, content, policyId],
+      callback
+    );
   }
 }
 
-module.exports = PrivacyModel;
+module.exports = PrivacyPolicyModel;

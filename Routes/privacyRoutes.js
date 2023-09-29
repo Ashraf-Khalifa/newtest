@@ -1,11 +1,11 @@
+// privacyPolicyRoutes.js
 const express = require("express");
 const router = express.Router();
-const PrivacyController = require("../Controllers/PrivacyController");
+const PrivacyPolicyController = require("../controllers/PrivacyController");
 
-// Route to add a new privacy policy
-router.post("/add", PrivacyController.addPrivacyPolicy);
-
-// Route to get all privacy policies
-router.get("/show", PrivacyController.getAllPrivacyPolicies);
+router.post("/add", PrivacyPolicyController.addPrivacyPolicy);
+router.get("/list", PrivacyPolicyController.getPrivacyPolicies);
+router.delete("/delete/:policyId", PrivacyPolicyController.deletePrivacyPolicy);
+router.put("/update/:policyId", PrivacyPolicyController.updatePrivacyPolicy);
 
 module.exports = router;
