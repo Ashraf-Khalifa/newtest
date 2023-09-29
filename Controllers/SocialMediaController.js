@@ -18,6 +18,7 @@ class SocialMediaController {
 
       console.log("Social media item added successfully");
       const socialMediaItem = {
+        id: result.insertId,
         link,
       };
       return res.status(200).json({
@@ -49,6 +50,7 @@ class SocialMediaController {
       }
 
       const socialMediaItems = results.map((item) => ({
+        id: item.id,
         link: item.link,
       }));
 
@@ -83,6 +85,7 @@ class SocialMediaController {
       }
 
       const socialMediaItem = {
+        
         link: result.link,
       };
 
@@ -115,6 +118,7 @@ class SocialMediaController {
 
       console.log("Social media item updated successfully");
       const socialMediaItem = {
+        id: socialMediaId,
         link,
       };
       return res.status(200).json({
