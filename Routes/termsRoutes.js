@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const TermsController = require("../Controllers/TermsController");
 
-// Route to add Terms and Conditions
-router.post("/add", TermsController.addTerms);
-
-// Route to retrieve all Terms and Conditions
-router.get("/show", TermsController.getAllTerms);
+// Routes for term-related actions
+router.post("/add", TermsController.addTerm); // Add a term
+router.get("/list", TermsController.getTerms); // Retrieve term list
+router.delete("/delete/:termId", TermsController.deleteTerm); // Delete a term
+router.put("/update/:termId", TermsController.updateTerm); // Update a term
 
 module.exports = router;
