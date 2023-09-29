@@ -26,6 +26,7 @@ const shopRoutes = require("./Routes/shopRoutes");
 const privacyRoutes = require("./Routes/privacyRoutes");
 const termsRoutes = require("./Routes/termsRoutes");
 const socialMediaRoutes = require("./Routes/SocialMediaRoutes");
+const iconsRoutes = require("./Routes/IconsRoutes");
 
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
@@ -35,6 +36,7 @@ app.use("/shop", shopRoutes);
 app.use("/privacy", privacyRoutes);
 app.use("/terms", termsRoutes);
 app.use("/social_media", socialMediaRoutes); 
+app.use("/icons", iconsRoutes);
 
 app.get("/", (req, res) => {
   res.send({ message: "Digital passport app", my_env_var: process.env.MY_VAR });
