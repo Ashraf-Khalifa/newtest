@@ -1,19 +1,15 @@
 const ShopModel = require("../Models/ShopModel");
 const fs = require("fs");
 
-
-
 class ShopController {
   static addShop(req, res) {
     console.log("Received request to add a shop.");
-
 
     const { title, price, content } = req.body;
     console.log("Received data:", title, price, content);
 
     const image = req.file;
 
-    
     if (!image) {
       console.error("Image file is required");
       return res.status(400).json({
@@ -90,11 +86,9 @@ class ShopController {
           content: shop.content,
           image_path: shop.image,
         };
-      
+
         shopDetailsArray.push(shopDetails);
       });
-      
-      
 
       return res.status(200).json({
         data: shopDetailsArray,
@@ -184,3 +178,4 @@ class ShopController {
 }
 
 module.exports = ShopController;
+
