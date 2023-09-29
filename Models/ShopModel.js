@@ -1,49 +1,47 @@
 const dbConnection = require("../config");
 
 class ShopModel {
-  static addShop(imagePath, title, price, content, callback) {
-    const insertShopQuery = `
-      INSERT INTO shop (image, title, price, content)
+  static addItem(imagePath, title, price, content, callback) {
+    const insertItemQuery = `
+      INSERT INTO shop_items (image_path, title, price, content)
       VALUES (?, ?, ?, ?)
     `;
 
     dbConnection.query(
-      insertShopQuery,
+      insertItemQuery,
       [JSON.stringify(imagePath), title, price, content],
       callback
     );
   }
 
-  static getShops(callback) {
-    const selectShopQuery = `
-    SELECT id, title, price, content, image
-      FROM shop
+  static getItems(callback) {
+    const selectItemsQuery = `
+      SELECT id, title, price, content, image_path
+      FROM shop_items
     `;
 
-    dbConnection.query(selectShopQuery, callback);
+    dbConnection.query(selectItemsQuery, callback);
   }
 
-  // Add more methods for shop-related database operations if needed
-
-  static deleteShop(shopId, callback) {
-    const deleteShopQuery = `
-      DELETE FROM shop
+  static deleteItem(itemId, callback) {
+    const deleteItemQuery = `
+      DELETE FROM shop_items
       WHERE id = ?
     `;
 
-    dbConnection.query(deleteShopQuery, [shopId], callback);
+    dbConnection.query(deleteItemQuery, [itemId], callback);
   }
 
-  static updateShop(shopId, imagePath, title, price, content, callback) {
-    const updateShopQuery = `
-      UPDATE shop
-      SET image = ?, title = ?, price = ?, content = ?
+  static updateItem(itemId, imagePath, title, price, content, callback) {
+    const updateItemQuery = `
+      UPDATE shop_items
+      SET image_path = ?, title = ?, price = ?, content = ?
       WHERE id = ?
     `;
 
     dbConnection.query(
-      updateShopQuery,
-      [imagePath, title, price, content, shopId],
+      updateItemQuery,
+      [imagePath, title, price, content, itemId],
       callback
     );
   }

@@ -2,54 +2,61 @@ const ShopModel = require("../Models/ShopModel");
 const fs = require("fs");
 
 class ShopController {
-  static addShop(req, res) {
-    console.log("Received request to add a shop.");
+  static addItem(req, res) {
+    console.log("Received request to add an item.");
 
+    // Extract data from the request
     const { title, price, content } = req.body;
     console.log("Received data:", title, price, content);
 
-    const image = req.file;
+    const image = req.file; // Use req.file to get the uploaded image
 
+    // Check if there is no image
     if (!image) {
-      console.error("Image file is required");
+      const errorMessage = "Image file is required";
+      console.error(errorMessage);
       return res.status(400).json({
         data: null,
         success: false,
-        errors: { message: "Image file is required" },
+        errors: { message: errorMessage },
       });
     }
 
     const imagePath = `uploads/${image.originalname}`;
 
+    // Write the image to the server's file system
     fs.writeFile(imagePath, image.buffer, (err) => {
       if (err) {
-        console.error("Error saving image:", err);
+        const errorMessage = "Error saving image";
+        console.error(errorMessage, err);
         return res.status(500).json({
           data: null,
           success: false,
-          errors: { message: "Error adding shop" },
+          errors: { message: errorMessage },
         });
       }
 
-      ShopModel.addShop(imagePath, title, price, content, (err, result) => {
+      // Add the item to the database with the image path
+      ShopModel.addItem(imagePath, title, price, content, (err, result) => {
         if (err) {
-          console.error("MySQL Error:", err);
+          const errorMessage = "Error adding item to the database";
+          console.error(errorMessage, err);
           return res.status(500).json({
             data: null,
             success: false,
-            errors: { message: "Error adding shop to the database" },
+            errors: { message: errorMessage },
           });
         }
 
-        console.log("Shop added successfully");
-        const shopData = {
+        console.log("Item added successfully");
+        const itemData = {
           title,
           price,
           content,
           image_path: imagePath,
         };
         return res.status(200).json({
-          data: shopData,
+          data: itemData,
           success: true,
           errors: {},
         });
@@ -57,14 +64,14 @@ class ShopController {
     });
   }
 
-  static getShops(req, res) {
-    ShopModel.getShops((err, results) => {
+  static getItems(req, res) {
+    ShopModel.getItems((err, results) => {
       if (err) {
         console.error("MySQL Error:", err);
         return res.status(500).json({
           data: null,
           success: false,
-          errors: { message: "Error retrieving shops" },
+          errors: { message: "Error retrieving items" },
         });
       }
 
@@ -76,55 +83,61 @@ class ShopController {
         });
       }
 
-      const shopDetailsArray = [];
+      const itemDetailsArray = [];
 
-      results.forEach((shop) => {
-        const shopDetails = {
-          id: shop.id, // Include the ID property
-          title: shop.title,
-          price: shop.price,
-          content: shop.content,
-          image_path: shop.image,
+      results.forEach((item) => {
+        const itemDetails = {
+          id: item.id,
+          title: item.title,
+          price: item.price,
+          content: item.content,
+          image_path: item.image_path,
         };
 
-        shopDetailsArray.push(shopDetails);
+        itemDetailsArray.push(itemDetails);
       });
 
       return res.status(200).json({
-        data: shopDetailsArray,
+        data: itemDetailsArray,
         success: true,
         errors: {},
       });
     });
   }
 
-  static deleteShop(req, res) {
-    const shopId = parseInt(req.params.shopId, 10);
+  static deleteItem(req, res) {
+    const itemId = parseInt(req.params.itemId, 10);
 
-    ShopModel.deleteShop(shopId, (err, result) => {
+    // Delete the item from the database
+    ShopModel.deleteItem(itemId, (err, result) => {
       if (err) {
         console.error("MySQL Error:", err);
         return res.status(500).json({
           data: null,
           success: false,
-          errors: { message: "Error deleting shop from the database" },
+          errors: { message: "Error deleting item from the database" },
         });
       }
 
       if (result.affectedRows === 0) {
-        return res.status(404).json({ message: "Shop not found" });
+        // No item found with the specified ID
+        return res.status(404).json({ message: "Item not found" });
       }
 
-      console.log("Shop deleted successfully");
-      res.status(200).json({ message: "Shop deleted successfully" });
+      // You can now also delete the associated image file using 'image_path'
+      // Make sure to handle this operation securely
+
+      console.log("Item deleted successfully");
+      res.status(200).json({ message: "Item deleted successfully" });
     });
   }
 
-  static updateShop(req, res) {
-    const shopId = parseInt(req.params.shopId, 10);
+  static updateItem(req, res) {
+    const itemId = parseInt(req.params.itemId, 10);
     const { title, price, content } = req.body;
     const image = req.file;
 
+    // Check if the image is missing
     if (!image) {
       console.error("Image file is required");
       return res.status(400).json({
@@ -134,41 +147,45 @@ class ShopController {
       });
     }
 
+    // Define the file path to save the uploaded image
     const imagePath = `uploads/${image.originalname}`;
 
+    // Write the image to the server's file system
     fs.writeFile(imagePath, image.buffer, (err) => {
       if (err) {
         console.error("Error saving image:", err);
         return res.status(500).json({
           data: null,
           success: false,
-          errors: { message: "Error updating shop" },
+          errors: { message: "Error updating item" },
         });
       }
 
-      ShopModel.updateShop(shopId, imagePath, title, price, content, (err, result) => {
+      // Update the item data in the database with the new image file path
+      ShopModel.updateItem(itemId, imagePath, title, price, content, (err, result) => {
         if (err) {
           console.error("MySQL Error:", err);
           return res.status(500).json({
             data: null,
             success: false,
-            errors: { message: "Error updating shop in the database" },
+            errors: { message: "Error updating item in the database" },
           });
         }
 
         if (result.affectedRows === 0) {
-          return res.status(404).json({ message: "Shop not found" });
+          // No item found with the specified ID
+          return res.status(404).json({ message: "Item not found" });
         }
 
-        console.log("Shop updated successfully");
-        const shopData = {
+        console.log("Item updated successfully");
+        const itemData = {
           title,
           price,
           content,
           image_path: imagePath,
         };
         return res.status(200).json({
-          data: shopData,
+          data: itemData,
           success: true,
           errors: {},
         });
@@ -178,4 +195,3 @@ class ShopController {
 }
 
 module.exports = ShopController;
-
