@@ -1,7 +1,7 @@
 // privacyPolicyRoutes.js
 const express = require("express");
 const router = express.Router();
-const PrivacyPolicyController = require("../controllers/PrivacyController");
+const PrivacyPolicyController = require("../Controllers/PrivacyController");
 
 router.post("/add", PrivacyPolicyController.addPrivacyPolicy);
 router.get("/list", PrivacyPolicyController.getPrivacyPolicies);
