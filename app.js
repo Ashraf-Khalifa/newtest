@@ -17,6 +17,7 @@ app.options("*", cors()); // Enable CORS for all routes that support OPTIONS
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+
 // Include and use your routes here
 const authRoutes = require("./Routes/authRoutes");
 const userRoutes = require("./Routes/userRoutes");
@@ -29,6 +30,7 @@ const socialMediaRoutes = require("./Routes/SocialMediaRoutes");
 const iconsRoutes = require("./Routes/IconsRoutes");
 const backgroundRoutes = require("./Routes/BackgroundRoutes");
 const aboutRoutes = require("./Routes/AboutRoutes");
+const qrRoutes = require("./Routes/QrRoutes");
 
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
@@ -41,6 +43,7 @@ app.use("/social_media", socialMediaRoutes);
 app.use("/icons", iconsRoutes);
 app.use("/background", backgroundRoutes);
 app.use("/about", aboutRoutes);
+app.use("/qr", qrRoutes);
 
 app.get("/", (req, res) => {
   res.send({ message: "Digital passport app", my_env_var: process.env.MY_VAR });
@@ -56,7 +59,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ message: err.message });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3005;
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
