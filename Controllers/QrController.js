@@ -133,10 +133,16 @@ if (logo) {
         </html>
       `;
   
-      res.status(200).send(htmlContent);
+      const jsonResponse = {
+        data: qrCodeDetailsArray,
+        success: true,
+        errors: {},
+      };
+  
+      // Send both HTML content and JSON data
+      res.status(200).json(jsonResponse);
     });
   }
-  
 
   static getQRById(req, res) {
     const qrId = parseInt(req.params.qrId, 10);
@@ -239,38 +245,38 @@ if (logo) {
   }
   static updateQR(req, res) {
     const qrId = parseInt(req.params.qrId, 10);
-
+  
     // Extract data from the request
     const { title, description, qr_code_url, name } = req.body;
     console.log("Received data:", title, description, qr_code_url, name);
-
+  
     // Access the uploaded files using the correct field names (optional)
     const image = req.files["image"] ? req.files["image"][0] : null;
     const audio = req.files["audio"] ? req.files["audio"][0] : null;
     const video = req.files["video"] ? req.files["video"][0] : null;
     const logo = req.files["logo"] ? req.files["logo"][0] : null;
-
+  
     const qrCodeData = {
       title,
       description,
       qr_code_url,
       name,
     };
-
+  
     // If files are provided, update the paths
     if (image) {
-      qrCodeData.image_path = `image/${image.originalname}`;
+      qrCodeData.image_path = `/image/${image.originalname}`;
     }
     if (audio) {
-      qrCodeData.audio_path = `audio/${audio.originalname}`;
+      qrCodeData.audio_path = `/audio/${audio.originalname}`;
     }
     if (video) {
-      qrCodeData.video_path = `video/${video.originalname}`;
+      qrCodeData.video_path = `/video/${video.originalname}`;
     }
     if (logo) {
-      qrCodeData.logo_path = `logo/${logo.originalname}`;
+      qrCodeData.logo_path = `/logo/${logo.originalname}`;
     }
-
+  
     // Update QR code data in the database
     QRModel.updateQR(qrId, qrCodeData, (err, result) => {
       if (err) {
@@ -282,7 +288,7 @@ if (logo) {
           errors: { message: errorMessage },
         });
       }
-
+  
       console.log("QR code updated successfully");
       return res.status(200).json({
         data: qrCodeData,
@@ -291,6 +297,7 @@ if (logo) {
       });
     });
   }
+  
 
  
 }
