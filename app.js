@@ -4,6 +4,10 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const app = express();
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs/promises");
+
 
 // Use the 'morgan' middleware for logging HTTP requests
 app.use(morgan("dev"));
@@ -17,6 +21,8 @@ app.options("*", cors()); // Enable CORS for all routes that support OPTIONS
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+
+// ... Your existing code ...
 
 // Include and use your routes here
 const authRoutes = require("./Routes/authRoutes");
@@ -44,6 +50,16 @@ app.use("/icons", iconsRoutes);
 app.use("/background", backgroundRoutes);
 app.use("/about", aboutRoutes);
 app.use("/qr", qrRoutes);
+
+// Serve static audio and video files
+app.use("/audio", express.static(path.join(__dirname, "audio")));
+app.use("/video", express.static(path.join(__dirname, "video")));
+app.use("/logo", express.static(path.join(__dirname, "logo")));
+app.use("/image", express.static(path.join(__dirname, "image")));
+
+
+
+
 
 app.get("/", (req, res) => {
   res.send({ message: "Digital passport app", my_env_var: process.env.MY_VAR });

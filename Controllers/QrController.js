@@ -8,33 +8,37 @@ class QRController {
     const { title, description, qr_code_url, name } = req.body;
     console.log("Received data:", title, description, qr_code_url, name);
 
-    // Access the uploaded files using the correct field names
-    const image = req.files["image"][0]; // Use [0] to access the first file if multiple files are uploaded
-    const audio = req.files["audio"][0];
-    const video = req.files["video"][0];
-    const logo = req.files["logo"][0];
+ 
 
-    // Check if any required fields or files are missing
-    if (!title || !description || !qr_code_url || !name || !image || !audio || !video || !logo) {
-      const errorMessage = "All fields, an image file, an audio file, and a video file are required";
-      console.error(errorMessage);
-      return res.status(400).json({
-        data: null,
-        success: false,
-        errors: { message: errorMessage },
-      });
-    }
+// Access the uploaded files using the correct field names
+const image = req.files["image"] ? req.files["image"][0] : null;
+const audio = req.files["audio"] ? req.files["audio"][0] : null;
+const video = req.files["video"] ? req.files["video"][0] : null;
+const logo = req.files["logo"] ? req.files["logo"][0] : null;
 
-    const qrCodeData = {
-      title,
-      description,
-      qr_code_url,
-      name,
-      image_path: `image/${image.originalname}`, // Set the image path
-      audio_path: `audio/${audio.originalname}`, // Set the audio path
-      video_path: `video/${video.originalname}`, // Set the video path
-      logo_path: `logo/${logo.originalname}`, // Set the logo path
-    };
+const qrCodeData = {
+  title,
+  description,
+  qr_code_url,
+  name,
+};
+
+// If files are provided, update the paths
+if (image) {
+  qrCodeData.image_path = `/image/${image.originalname}`;
+}
+if (audio) {
+  qrCodeData.audio_path = `/audio/${audio.originalname}`;
+}
+if (video) {
+  qrCodeData.video_path = `/video/${video.originalname}`;
+}
+if (logo) {
+  qrCodeData.logo_path = `/logo/${logo.originalname}`;
+}
+
+
+
 
     // Insert QR code data into the database
     QRModel.addQR(qrCodeData, (err, result) => {
@@ -57,6 +61,9 @@ class QRController {
     });
   }
 
+  // ... Rest of the QRController methods
+
+
 
   static getQRs(req, res) {
     QRModel.getQRs((err, results) => {
@@ -68,7 +75,7 @@ class QRController {
           errors: { message: "Error retrieving QR codes" },
         });
       }
-
+  
       if (results.length === 0) {
         return res.status(404).json({
           data: [],
@@ -76,9 +83,9 @@ class QRController {
           errors: {},
         });
       }
-
+  
       const qrCodeDetailsArray = [];
-
+  
       results.forEach((qr) => {
         const qrCodeDetails = {
           id: qr.id,
@@ -91,45 +98,121 @@ class QRController {
           video: qr.video,
           logo: qr.logo
         };
-
+  
         qrCodeDetailsArray.push(qrCodeDetails);
       });
-
-      return res.status(200).json({
-        data: qrCodeDetailsArray,
-        success: true,
-        errors: {},
-      });
+  
+      // Include the HTML content for displaying QR code data
+      const htmlContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>QR Code Data</title>
+        </head>
+        <body>
+          <h1>QR Code Data</h1>
+          <ul>
+            ${qrCodeDetailsArray.map(qr => `
+              <li>
+                <h2>${qr.title}</h2>
+                <p>${qr.description}</p>
+                <img src="${qr.image}" alt="QR Code Image">
+                <audio controls>
+                  <source src="${qr.audio}" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                </audio>
+                <video controls width="640" height="360">
+                  <source src="${qr.video}" type="video/mp4">
+                  Your browser does not support the video element.
+                </video>
+                <img src="${qr.logo}" alt="Logo Image">
+              </li>
+            `).join('')}
+          </ul>
+        </body>
+        </html>
+      `;
+  
+      res.status(200).send(htmlContent);
     });
   }
+  
 
   static getQRById(req, res) {
     const qrId = parseInt(req.params.qrId, 10);
 
     // Retrieve the QR code by ID from the database
     QRModel.getQRById(qrId, (err, result) => {
-      if (err) {
-        console.error("MySQL Error:", err);
-        return res.status(500).json({
-          data: null,
-          success: false,
-          errors: { message: "Error retrieving QR code by ID" },
-        });
-      }
+        if (err) {
+            console.error("MySQL Error:", err);
+            return res.status(500).json({
+                data: null,
+                success: false,
+                errors: { message: "Error retrieving QR code by ID" },
+            });
+        }
 
-      if (!result) {
-        // No QR code found with the specified ID
-        return res.status(404).json({ message: 'QR code not found' });
-      }
+        if (!result) {
+            // No QR code found with the specified ID
+            return res.status(404).json({ message: 'QR code not found' });
+        }
 
-      console.log("QR code retrieved successfully by ID");
-      return res.status(200).json({
-        data: result,
-        success: true,
-        errors: {},
-      });
+        const title = result.title;
+        const description = result.description;
+        const name = result.name;
+        const imageSrc = result.image;
+        const audioSrc = result.audio;
+        const logoSrc = result.logo;
+        const videoSrc = result.video;
+
+        // Construct the HTML template for video playback
+        const htmlContent =`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>${title}</title>
+            <style>
+                /* Center content vertically and horizontally */
+                body {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 100vh;
+                    margin: 0;
+                }
+                .content {
+                    text-align: center;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="content">
+                ${title ? `<h1>${title}</h1>` : ''} <br>
+                ${description ? `<p>${description}</p>` : ''}
+                ${name ? `<p>Name: ${name}</p>` : ''}<br>
+                ${imageSrc ? `<img src="${imageSrc}" alt="Image">` : ''}<br>
+                ${audioSrc ? `<audio controls>
+                    <source src="${audioSrc}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>` : ''}<br>
+                ${logoSrc ? `<img src="${logoSrc}" alt="Logo Image">` : ''}<br>
+                ${videoSrc ? `
+                <video controls width="640" height="360">
+                    <source src="${videoSrc}" type="video/mp4">
+                    Your browser does not support the video element.
+                </video>` : ''}<br>
+            </div>
+        </body>
+        </html>
+        `;
+
+        // Send the HTML content as the response
+        res.status(200).send(htmlContent);
     });
-  }
+}
+
+
+
 
   static deleteQR(req, res) {
     const qrId = parseInt(req.params.qrId, 10);
