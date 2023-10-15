@@ -183,17 +183,44 @@ if (logo) {
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    min-height: 100vh;
+                    min-height: 100%;
                     margin: 0;
+                    min-width: 100%;
+                    background-color : #B79B4D;
+                    
+                    
                 }
                 .content {
                     text-align: center;
+                    min-width: 100%
+
+                }
+                .other{
+                  padding-top: 40px;
+                  text-align: center;
+            background-color: #fff; /* Set content background color */
+            min-width: 100%;
+            border-radius: 30px 30px 0px 0px;
+            min-height: 100vh;
+
+            
+                }
+                .logo{
+                  background-color : #B79B4D;
+                  height: 200px;
+                  text-align: center;
+                  
+                  min-width: 100%
+                   
                 }
             </style>
         </head>
         <body>
             <div class="content">
-                ${logoSrc ? `<img src="${logoSrc}" alt="Logo Image">` : ''}<br>
+            <div class="logo">   
+            ${logoSrc ? `<img style="padding-top: 40px " src="${logoSrc}" alt="Logo Image">` : ''}<br>
+            </div>
+            <div class="other">
                 ${title ? `<h1>${title}</h1>` : ''} <br>
                 ${description ? `<p style="padding-left: 50px; padding-right: 50px;">${description}</p>` : ''}
                 ${imageSrc ? `<img src="${imageSrc}" alt="Image">` : ''}<br>
@@ -207,6 +234,7 @@ if (logo) {
                     <source src="${videoSrc}" type="video/mp4">
                     Your browser does not support the video element.
                 </video>` : ''}<br>
+                </div>
             </div>
         </body>
         </html>
