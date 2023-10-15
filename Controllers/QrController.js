@@ -193,15 +193,15 @@ if (logo) {
         </head>
         <body>
             <div class="content">
+                ${logoSrc ? `<img src="${logoSrc}" alt="Logo Image">` : ''}<br>
                 ${title ? `<h1>${title}</h1>` : ''} <br>
-                ${description ? `<p>${description}</p>` : ''}
-                ${name ? `<p>Name: ${name}</p>` : ''}<br>
+                ${description ? `<p style="padding-left: 300px; padding-right: 300px;">${description}</p>` : ''}
                 ${imageSrc ? `<img src="${imageSrc}" alt="Image">` : ''}<br>
                 ${audioSrc ? `<audio controls>
                     <source src="${audioSrc}" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>` : ''}<br>
-                ${logoSrc ? `<img src="${logoSrc}" alt="Logo Image">` : ''}<br>
+               
                 ${videoSrc ? `
                 <video controls width="640" height="360">
                     <source src="${videoSrc}" type="video/mp4">
@@ -220,6 +220,7 @@ if (logo) {
 
 
 
+  
   static deleteQR(req, res) {
     const qrId = parseInt(req.params.qrId, 10);
 
@@ -242,7 +243,84 @@ if (logo) {
       console.log("QR code deleted successfully");
       res.status(200).json({ message: 'QR code deleted successfully' });
     });
+  } 
+  
+  static deleteImage(req, res) {
+    const qrId = parseInt(req.params.qrId, 10);
+  
+    QRModel.deleteImage(qrId, (err, result) => {
+      if (err) {
+        console.error("MySQL Error:", err);
+        return res.status(500).json({
+          data: null,
+          success: false,
+          errors: { message: "Error deleting image from the QR code" },
+        });
+      }
+  
+      console.log("Image deleted successfully");
+      res.status(200).json({ message: 'Image deleted successfully' });
+    });
   }
+  
+  
+  static deleteLogo(req, res) {
+    const qrId = parseInt(req.params.qrId, 10);
+  
+    QRModel.deleteLogo(qrId, (err, result) => {
+      if (err) {
+        console.error("MySQL Error:", err);
+        return res.status(500).json({
+          data: null,
+          success: false,
+          errors: { message: "Error deleting logo from the QR code" },
+        });
+      }
+  
+      console.log("Logo deleted successfully");
+      res.status(200).json({ message: 'Logo deleted successfully' });
+    });
+  }
+  
+  static deleteAudio(req, res) {
+    const qrId = parseInt(req.params.qrId, 10);
+  
+    QRModel.deleteAudio(qrId, (err, result) => {
+      if (err) {
+        console.error("MySQL Error:", err);
+        return res.status(500).json({
+          data: null,
+          success: false,
+          errors: { message: "Error deleting audio from the QR code" },
+        });
+      }
+  
+      console.log("Audio deleted successfully");
+      res.status(200).json({ message: 'Audio deleted successfully' });
+    });
+  }
+  
+  static deleteVideo(req, res) {
+    const qrId = parseInt(req.params.qrId, 10);
+  
+    QRModel.deleteVideo(qrId, (err, result) => {
+      if (err) {
+        console.error("MySQL Error:", err);
+        return res.status(500).json({
+          data: null,
+          success: false,
+          errors: { message: "Error deleting video from the QR code" },
+        });
+      }
+  
+      console.log("Video deleted successfully");
+      res.status(200).json({ message: 'Video deleted successfully' });
+    });
+  }
+  
+
+
+
   static updateQR(req, res) {
     const qrId = parseInt(req.params.qrId, 10);
   

@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const QRController = require("../Controllers/QrController");
 const multer = require("multer");
+const path = require("path");
+const fs = require("fs/promises"); // To work with the file system
+const QRModel = require('../Models/QrModel'); // Import your QRModel
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -31,5 +34,12 @@ router.put("/update/:qrId", upload.fields([{ name: "image" }, { name: "audio" },
 router.get("/list", QRController.getQRs); // Retrieve QR code list
 router.get("/:qrId", QRController.getQRById);
 router.delete("/delete/:qrId", QRController.deleteQR); // Delete a QR code
+router.delete("/deleteImage/:qrId", QRController.deleteImage);
+router.delete("/deleteLogo/:qrId", QRController.deleteLogo);
+router.delete("/deleteAudio/:qrId", QRController.deleteAudio);
+router.delete("/deleteVideo/:qrId", QRController.deleteVideo);
+
+
+
 
 module.exports = router;

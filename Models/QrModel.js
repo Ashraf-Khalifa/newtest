@@ -54,6 +54,48 @@ class QRModel {
     dbConnection.query(deleteQRQuery, [qrId], callback);
   }
 
+  static deleteImage(qrId, callback) {
+    const deleteImageQuery = `
+      UPDATE qr_code
+      SET image = NULL
+      WHERE id = ?
+    `;
+  
+    dbConnection.query(deleteImageQuery, [qrId], callback);
+  }
+
+  static deleteLogo(qrId, callback) {
+    const deleteLogoQuery = `
+      UPDATE qr_code
+      SET logo = NULL
+      WHERE id = ?
+    `;
+  
+    dbConnection.query(deleteLogoQuery, [qrId], callback);
+  }
+  
+  static deleteAudio(qrId, callback) {
+    const deleteAudioQuery = `
+      UPDATE qr_code
+      SET audio = NULL
+      WHERE id = ?
+    `;
+  
+    dbConnection.query(deleteAudioQuery, [qrId], callback);
+  }
+  
+  static deleteVideo(qrId, callback) {
+    const deleteVideoQuery = `
+      UPDATE qr_code
+      SET video = NULL
+      WHERE id = ?
+    `;
+  
+    dbConnection.query(deleteVideoQuery, [qrId], callback);
+  }
+  
+  
+
   static updateQR(qrId, qrCodeData, callback) {
     const updateQRQuery = `
       UPDATE qr_code
@@ -77,8 +119,7 @@ class QRModel {
     dbConnection.query(updateQRQuery, queryParams, callback);
   }
   
-
-  
+ 
 }
 
 module.exports = QRModel;
