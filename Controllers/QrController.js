@@ -195,7 +195,7 @@ if (logo) {
             <div class="content">
                 ${logoSrc ? `<img src="${logoSrc}" alt="Logo Image">` : ''}<br>
                 ${title ? `<h1>${title}</h1>` : ''} <br>
-                ${description ? `<p style="padding-left: 300px; padding-right: 300px;">${description}</p>` : ''}
+                ${description ? `<p style="padding-left: 50px; padding-right: 50px;">${description}</p>` : ''}
                 ${imageSrc ? `<img src="${imageSrc}" alt="Image">` : ''}<br>
                 ${audioSrc ? `<audio controls>
                     <source src="${audioSrc}" type="audio/mpeg">
