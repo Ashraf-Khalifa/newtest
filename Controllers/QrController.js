@@ -219,19 +219,19 @@ if (logo) {
         </div>
         <div class="row custom-text">
             <div class="col-12 text-center">
-                ${title ? `<h1>${title}</h1>` : ''}
-                ${description ? `<p class="px-4 custom-description">${description}</p>` : ''}
+                ${title ? `<h1>${title}</h1>` : ''}<br>
+                ${description ? `<p class="px-4 custom-description">${description}</p>` : ''}<br>
                 ${audioSrc ? `
                 <audio controls>
                     <source src="${audioSrc}" type="audio/mpeg">
                     Your browser does not support the audio element.
-                </audio>` : ''}
-                ${imageSrc ? `<img src="${imageSrc}" alt="Image">` : ''}
+                </audio>` : ''}<br>
+                ${imageSrc ? `<img src="${imageSrc}" alt="Image">` : ''}<br>
                 ${videoSrc ? `
                 <video controls width="640" height="360">
                     <source src="${videoSrc}" type="video/mp4">
                     Your browser does not support the video element.
-                </video>` : ''}
+                </video>` : ''}<br>
             </div>
         </div>
         <div class="row custom-footer-background py-5">
