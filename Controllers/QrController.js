@@ -212,6 +212,10 @@ if (logo) {
         .custom-description {
             font-size: 40px;
         }
+        .custom-title{
+          font-size: 60px;
+          font-weight: bold;
+        }
     </style>
 
     <div class="container-fluid">
@@ -222,7 +226,7 @@ if (logo) {
         </div>
         <div class="row custom-text">
             <div class="col-12 text-center">
-                ${title ? `<h1>${title}</h1>` : ''}<br>
+                ${title ? `<h1 class="px-4 custom-title">${title}</h1>` : ''}<br>
                 ${description ? `<p class="px-4 custom-description">${description}</p>` : ''}<br>
                 ${audioSrc ? `
                 <audio controls style="width: 100%;">
