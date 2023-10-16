@@ -180,6 +180,9 @@ if (logo) {
     <title>${title}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
     <style>
         /* Custom Styles */
         .custom-background {
@@ -201,16 +204,16 @@ if (logo) {
         .custom-text {
             padding: 40px;
         }
+
         .larg {
-          font-size: 30px;
-      }
-      .custom-description {
-        font-size: 40px; 
-    }
-        
+            font-size: 30px;
+        }
+
+        .custom-description {
+            font-size: 40px;
+        }
     </style>
-</head>
-<body>
+
     <div class="container-fluid">
         <div class="row custom-background">
             <div class="col-12 text-center">
@@ -222,50 +225,50 @@ if (logo) {
                 ${title ? `<h1>${title}</h1>` : ''}<br>
                 ${description ? `<p class="px-4 custom-description">${description}</p>` : ''}<br>
                 ${audioSrc ? `
-                <audio controls style="width: 90%;">
+                <audio controls style="width: 100%;">
                     <source src="${audioSrc}" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>` : ''}<br>
                 ${imageSrc ? `<img src="${imageSrc}" alt="Image">` : ''}<br>
-                
                 ${videoSrc ? `
-    <video controls width="100%" height="360">
-        <source src="${videoSrc}" type="video/mp4">
-        Your browser does not support the video element.
-    </video>` : ''}<br>
+                <video controls style="width: 100%; height: auto;">
+                    <source src="${videoSrc}" type="video/mp4">
+                    Your browser does not support the video element.
+                </video>` : ''}<br>
             </div>
         </div>
         <div class="row custom-footer-background py-5">
-        <div class="col-12 text-center custom-footer-text">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                <p class="larg">The Royal Tank Museum @2023</p>
+            <div class="col-12 text-center custom-footer-text">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="larg">The Royal Tank Museum @2023</p>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a href="https://www.facebook.com/TankMuseumjo" style="color: #ffffff; font-size: 50px;" class="mr-3 pl-2">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://twitter.com/TankMuseumJo" style="color: #ffffff; font-size: 50px;" class="mr-3 pl-2">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/tankmuseumjo" style="color: #ffffff; font-size: 50px;" class="mr-3 pl-2">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://rtm.jo" style="color: #ffffff; font-size: 50px;" class="mr-3 pl-2">
+                            <i class="fas fa-globe"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="d-flex justify-content-center">
-                <a href="https://www.facebook.com/TankMuseumjo" style="color: #ffffff; font-size: 50px;" class="mr-3 pl-2">
-                    <i class="fab fa-facebook"></i>
-                </a>
-                <a href="https://twitter.com/TankMuseumJo" style="color: #ffffff; font-size: 50px;" class="mr-3 pl-2">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="https://www.instagram.com/tankmuseumjo" style="color: #ffffff; font-size: 50px;" class="mr-3 pl-2">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://rtm.jo" style="color: #ffffff; font-size: 50px;" class="mr-3 pl-2">
-                    <i class="fas fa-globe"></i>
-                </a>
-            </div>
-            
             </div>
         </div>
     </div>
-    
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
+
 
         `;
 
