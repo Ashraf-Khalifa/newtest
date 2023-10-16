@@ -175,98 +175,90 @@ if (logo) {
         const htmlContent =`
         <!DOCTYPE html>
         <html>
+        
         <head>
             <title>${title}</title>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
             <style>
-                /* Center content vertically and horizontally */
-                body {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    min-height: 100%;
-                    margin: 0;
-                    min-width: 100%;
+                /* Custom Styles */
+                .custom-background {
+                    background-color: #BCA464;
                 }
-                .text{
-                  min-width: 100%;
+        
+                .custom-footer-background {
+                    background-color: #BCA464;
+                    position: fixed;
+                    bottom: 0;
+                    width: 100%;
                 }
-                .content {
-                    text-align: center;
-                    min-width: 100%;
-                    background-color : #BCA464;
+        
+                .custom-footer-text {
+                    color: #fff;
                 }
-                .other{
-                  padding-top: 40px;
-                  text-align: center;
-            background-color: #fff; /* Set content background color */
-            min-width: 100%;
-            border-radius: 30px 30px 0px 0px;
-            min-height: 100vh;
-            margin-bottom: 40px
-
-          }
-                .logo{
-                  background-color : #BCA464;
-                  height: 200px;
-                  text-align: center;
-                  
-                  min-width: 100%
-                   
+        
+                .custom-text {
+                    padding: 40px;
                 }
-                .footer {
-                  background-color:#BCA464;
-                  color: #fff;
-                  padding: 30px;
-                
-                  border-radius: 30px 30px 0px 0px;
-              }
-              .icon{
-                text-align: right; 
-                margin-top: -19px;
-                margin-right: 30px;
-              }
-             
-                
             </style>
         </head>
         <body>
-        <div class="text">
-            <div class="content">
-            <div class="logo">   
-            ${logoSrc ? `<img style="padding-top: 40px " src="${logoSrc}" alt="Logo Image">` : ''}<br>
-            </div>
-            <div class="other">
-                ${title ? `<h1>${title}</h1>` : ''} <br>
-                ${description ? `<p style="padding-left: 50px; padding-right: 50px;">${description}</p>` : ''}
-                
-                ${audioSrc ? `<audio controls>
-                    <source src="${audioSrc}" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>` : ''}<br>
-                ${imageSrc ? `<img src="${imageSrc}" alt="Image">` : ''}<br>
-                ${videoSrc ? `
-                <video controls width="640" height="360">
-                    <source src="${videoSrc}" type="video/mp4">
-                    Your browser does not support the video element.
-                </video>` : ''}<br>
+            <div class="container-fluid">
+                <div class="row custom-background">
+                    <div class="col-12 text-center">
+                        ${logoSrc ? `<img class="mt-4 mb-4" src="${logoSrc}" alt="Logo Image" style="max-height: 200px;">` : ''}
+                    </div>
                 </div>
-                
+                <div class="row custom-text">
+                    <div class="col-12 text-center">
+                        ${title ? `<h1>${title}</h1>` : ''}
+                        ${description ? `<p class="px-4">${description}</p>` : ''}
+                        ${audioSrc ? `
+                        <audio controls>
+                            <source src="${audioSrc}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>` : ''}
+                        ${imageSrc ? `<img src="${imageSrc}" alt="Image">` : ''}
+                        ${videoSrc ? `
+                        <video controls width="640" height="360">
+                            <source src="${videoSrc}" type="video/mp4">
+                            Your browser does not support the video element.
+                        </video>` : ''}
+                    </div>
+                </div>
+                <div class="row custom-footer-background">
+    <div class="col-12 text-center custom-footer-text">
+        <p class="small">The Royal Tank Museum @2023</p>
+        <div class="text-right">
+            <div class="d-flex justify-content-center">
+                <a href="https://www.facebook.com/TankMuseumjo" style="color: #0000ff; font-size: 30px;" class="mr-3">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://twitter.com/TankMuseumJo" style="color: #ffffff; font-size: 30px;" class="mr-3">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/tankmuseumjo" style="color: #ffffff; font-size: 30px;" class="mr-3">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://rtm.jo" style="color: #ffffff; font-size: 30px;">
+                    <i class="fas fa-globe"></i>
+                </a>
             </div>
-            <div class="footer">
-            <div style= "font-size: 5px;">
-            The Royal Tank Museum @2023
+        </div>
+    </div>
+</div>
+
             </div>
-            <div class= "icon">
-            <a href="https://www.facebook.com/TankMuseumjo"><i class="fa-brands fa-facebook" style=" color: #0000ff; "></i></a>
-            <a href="https://twitter.com/TankMuseumJo"><i class="fa-brands fa-twitter" style=" color: #ffffff;"></i></a>
-            <a href="https://www.instagram.com/tankmuseumjo"><i class="fa-brands fa-instagram" style=" color: #ffffff;"></i></a>
-            <a href="https://rtm.jo/"><i class="fa-solid fa-globe" style=" color: #ffffff;"></i></a>
-            </div>
-            </div>
-            </div>
+        
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         </body>
         </html>
+        
+        
+        
+
         `;
 
         // Send the HTML content as the response
