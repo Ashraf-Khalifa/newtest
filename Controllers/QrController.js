@@ -194,7 +194,7 @@ if (logo) {
                 .content {
                     text-align: center;
                     min-width: 100%;
-                    background-color : #B79B4D;
+                    background-color : #BCA464;
                 }
                 .other{
                   padding-top: 40px;
@@ -207,7 +207,7 @@ if (logo) {
 
           }
                 .logo{
-                  background-color : #B79B4D;
+                  background-color : #BCA464;
                   height: 200px;
                   text-align: center;
                   
@@ -215,7 +215,7 @@ if (logo) {
                    
                 }
                 .footer {
-                  background-color:#B79B4D;
+                  background-color:#BCA464;
                   color: #fff;
                   padding: 30px;
                 
@@ -226,9 +226,7 @@ if (logo) {
                 margin-top: -19px;
                 margin-right: 30px;
               }
-              .icon a{
-                margin-right: 5px;
-              }
+             
                 
             </style>
         </head>
@@ -256,12 +254,14 @@ if (logo) {
                 
             </div>
             <div class="footer">
+            <div style= "font-size: 15px;">
             The Royal Tank Museum @2023
+            </div>
             <div class= "icon">
-            <a href="https://www.facebook.com/TankMuseumjo"><i class="fa-brands fa-facebook" style="font-size: 25px; color: #0000ff; "></i></a>
-            <a href="https://twitter.com/TankMuseumJo"><i class="fa-brands fa-twitter" style="font-size: 25px; color: #ffffff;"></i></a>
-            <a href="https://www.instagram.com/tankmuseumjo"><i class="fa-brands fa-instagram" style="font-size: 25px; color: #ffffff;"></i></a>
-            <a href="https://rtm.jo/"><i class="fa-solid fa-globe" style="font-size: 25px; color: #ffffff;"></i></a>
+            <a href="https://www.facebook.com/TankMuseumjo"><i class="fa-brands fa-facebook" style=" color: #0000ff; "></i></a>
+            <a href="https://twitter.com/TankMuseumJo"><i class="fa-brands fa-twitter" style=" color: #ffffff;"></i></a>
+            <a href="https://www.instagram.com/tankmuseumjo"><i class="fa-brands fa-instagram" style=" color: #ffffff;"></i></a>
+            <a href="https://rtm.jo/"><i class="fa-solid fa-globe" style=" color: #ffffff;"></i></a>
             </div>
             </div>
             </div>
