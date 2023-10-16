@@ -201,23 +201,7 @@ if (logo) {
         .custom-text {
             padding: 40px;
         }
-        /* Custom Styles */
-        .custom-background {
-            background-color: #BCA464;
-        }
-    
-        .custom-footer-background {
-            background-color: #BCA464;
-        }
-    
-        .custom-footer-text {
-            color: #fff;
-        }
-    
-        .custom-text {
-            padding: 40px;
-            border-radius: 30px 30px 0px 0px;
-        }
+        
     </style>
 </head>
 <body>
@@ -244,7 +228,7 @@ if (logo) {
                 </video>` : ''}
             </div>
         </div>
-        <div class="row custom-footer-background py-4">
+        <div class="row custom-footer-background py-5">
         <div class="col-12 text-center custom-footer-text">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
