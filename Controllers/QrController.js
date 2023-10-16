@@ -222,16 +222,17 @@ if (logo) {
                 ${title ? `<h1>${title}</h1>` : ''}<br>
                 ${description ? `<p class="px-4 custom-description">${description}</p>` : ''}<br>
                 ${audioSrc ? `
-                <audio controls>
+                <audio controls style="width: 90%;">
                     <source src="${audioSrc}" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>` : ''}<br>
                 ${imageSrc ? `<img src="${imageSrc}" alt="Image">` : ''}<br>
+                
                 ${videoSrc ? `
-                <video controls width="640" height="360">
-                    <source src="${videoSrc}" type="video/mp4">
-                    Your browser does not support the video element.
-                </video>` : ''}<br>
+    <video controls width="100%" height="360">
+        <source src="${videoSrc}" type="video/mp4">
+        Your browser does not support the video element.
+    </video>` : ''}<br>
             </div>
         </div>
         <div class="row custom-footer-background py-5">
