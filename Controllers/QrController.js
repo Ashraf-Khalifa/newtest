@@ -254,7 +254,7 @@ if (logo) {
                 
             </div>
             <div class="footer">
-            <div style= "font-size: 15px;">
+            <div style= "font-size: 5px;">
             The Royal Tank Museum @2023
             </div>
             <div class= "icon">
