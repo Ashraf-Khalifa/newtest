@@ -177,6 +177,7 @@ if (logo) {
         <html>
         <head>
             <title>${title}</title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
             <style>
                 /* Center content vertically and horizontally */
                 body {
@@ -186,14 +187,14 @@ if (logo) {
                     min-height: 100%;
                     margin: 0;
                     min-width: 100%;
-                    background-color : #B79B4D;
-                    
-                    
+                }
+                .text{
+                  min-width: 100%;
                 }
                 .content {
                     text-align: center;
-                    min-width: 100%
-
+                    min-width: 100%;
+                    background-color : #B79B4D;
                 }
                 .other{
                   padding-top: 40px;
@@ -202,9 +203,9 @@ if (logo) {
             min-width: 100%;
             border-radius: 30px 30px 0px 0px;
             min-height: 100vh;
+            margin-bottom: 40px
 
-            
-                }
+          }
                 .logo{
                   background-color : #B79B4D;
                   height: 200px;
@@ -213,9 +214,26 @@ if (logo) {
                   min-width: 100%
                    
                 }
+                .footer {
+                  background-color:#B79B4D;
+                  color: #fff;
+                  padding: 30px;
+                
+                  border-radius: 30px 30px 0px 0px;
+              }
+              .icon{
+                text-align: right; 
+                margin-top: -19px;
+                margin-right: 30px;
+              }
+              .icon a{
+                margin-right: 5px;
+              }
+                
             </style>
         </head>
         <body>
+        <div class="text">
             <div class="content">
             <div class="logo">   
             ${logoSrc ? `<img style="padding-top: 40px " src="${logoSrc}" alt="Logo Image">` : ''}<br>
@@ -223,18 +241,29 @@ if (logo) {
             <div class="other">
                 ${title ? `<h1>${title}</h1>` : ''} <br>
                 ${description ? `<p style="padding-left: 50px; padding-right: 50px;">${description}</p>` : ''}
-                ${imageSrc ? `<img src="${imageSrc}" alt="Image">` : ''}<br>
+                
                 ${audioSrc ? `<audio controls>
                     <source src="${audioSrc}" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>` : ''}<br>
-               
+                ${imageSrc ? `<img src="${imageSrc}" alt="Image">` : ''}<br>
                 ${videoSrc ? `
                 <video controls width="640" height="360">
                     <source src="${videoSrc}" type="video/mp4">
                     Your browser does not support the video element.
                 </video>` : ''}<br>
                 </div>
+                
+            </div>
+            <div class="footer">
+            The Royal Tank Museum @2023
+            <div class= "icon">
+            <a href="https://www.facebook.com/TankMuseumjo"><i class="fa-brands fa-facebook" style="font-size: 25px; color: #0000ff; "></i></a>
+            <a href="https://twitter.com/TankMuseumJo"><i class="fa-brands fa-twitter" style="font-size: 25px; color: #ffffff;"></i></a>
+            <a href="https://www.instagram.com/tankmuseumjo"><i class="fa-brands fa-instagram" style="font-size: 25px; color: #ffffff;"></i></a>
+            <a href="https://rtm.jo/"><i class="fa-solid fa-globe" style="font-size: 25px; color: #ffffff;"></i></a>
+            </div>
+            </div>
             </div>
         </body>
         </html>
