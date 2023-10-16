@@ -174,90 +174,106 @@ if (logo) {
         // Construct the HTML template for video playback
         const htmlContent =`
         <!DOCTYPE html>
-        <html>
-        
-        <head>
-            <title>${title}</title>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-            <style>
-                /* Custom Styles */
-                .custom-background {
-                    background-color: #BCA464;
-                }
-        
-                .custom-footer-background {
-                    background-color: #BCA464;
-                    position: fixed;
-                    bottom: 0;
-                    width: 100%;
-                }
-        
-                .custom-footer-text {
-                    color: #fff;
-                }
-        
-                .custom-text {
-                    padding: 40px;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="container-fluid">
-                <div class="row custom-background">
-                    <div class="col-12 text-center">
-                        ${logoSrc ? `<img class="mt-4 mb-4" src="${logoSrc}" alt="Logo Image" style="max-height: 200px;">` : ''}
-                    </div>
+<html>
+
+<head>
+    <title>${title}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom Styles */
+        .custom-background {
+            background-color: #BCA464;
+        }
+
+        .custom-footer-background {
+            background-color: #BCA464;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            border-radius: 30px 30px 0px 0px;
+        }
+
+        .custom-footer-text {
+            color: #fff;
+        }
+
+        .custom-text {
+            padding: 40px;
+        }
+        /* Custom Styles */
+        .custom-background {
+            background-color: #BCA464;
+        }
+    
+        .custom-footer-background {
+            background-color: #BCA464;
+        }
+    
+        .custom-footer-text {
+            color: #fff;
+        }
+    
+        .custom-text {
+            padding: 40px;
+            border-radius: 30px 30px 0px 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row custom-background">
+            <div class="col-12 text-center">
+                ${logoSrc ? `<img class="mt-4 mb-4" src="${logoSrc}" alt="Logo Image" style="max-height: 200px;">` : ''}
+            </div>
+        </div>
+        <div class="row custom-text">
+            <div class="col-12 text-center">
+                ${title ? `<h1>${title}</h1>` : ''}
+                ${description ? `<p class="px-4">${description}</p>` : ''}
+                ${audioSrc ? `
+                <audio controls>
+                    <source src="${audioSrc}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>` : ''}
+                ${imageSrc ? `<img src="${imageSrc}" alt="Image">` : ''}
+                ${videoSrc ? `
+                <video controls width="640" height="360">
+                    <source src="${videoSrc}" type="video/mp4">
+                    Your browser does not support the video element.
+                </video>` : ''}
+            </div>
+        </div>
+        <div class="row custom-footer-background py-4">
+        <div class="col-12 text-center custom-footer-text">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="small">The Royal Tank Museum @2023</p>
                 </div>
-                <div class="row custom-text">
-                    <div class="col-12 text-center">
-                        ${title ? `<h1>${title}</h1>` : ''}
-                        ${description ? `<p class="px-4">${description}</p>` : ''}
-                        ${audioSrc ? `
-                        <audio controls>
-                            <source src="${audioSrc}" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>` : ''}
-                        ${imageSrc ? `<img src="${imageSrc}" alt="Image">` : ''}
-                        ${videoSrc ? `
-                        <video controls width="640" height="360">
-                            <source src="${videoSrc}" type="video/mp4">
-                            Your browser does not support the video element.
-                        </video>` : ''}
-                    </div>
+                <div class="d-flex justify-content-center">
+                    <a href="https://www.facebook.com/TankMuseumjo" style="color: #0000ff; font-size: 30px;" class="mr-3">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://twitter.com/TankMuseumJo" style="color: #ffffff; font-size: 30px;" class="mr-3">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.instagram.com/tankmuseumjo" style="color: #ffffff; font-size: 30px;" class="mr-3">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://rtm.jo" style="color: #ffffff; font-size: 30px;">
+                        <i class="fas fa-globe"></i>
+                    </a>
                 </div>
-                <div class="row custom-footer-background">
-    <div class="col-12 text-center custom-footer-text">
-        <p class="small">The Royal Tank Museum @2023</p>
-        <div class="text-right">
-            <div class="d-flex justify-content-center">
-                <a href="https://www.facebook.com/TankMuseumjo" style="color: #0000ff; font-size: 30px;" class="mr-3">
-                    <i class="fab fa-facebook"></i>
-                </a>
-                <a href="https://twitter.com/TankMuseumJo" style="color: #ffffff; font-size: 30px;" class="mr-3">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="https://www.instagram.com/tankmuseumjo" style="color: #ffffff; font-size: 30px;" class="mr-3">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://rtm.jo" style="color: #ffffff; font-size: 30px;">
-                    <i class="fas fa-globe"></i>
-                </a>
             </div>
         </div>
     </div>
-</div>
+    
 
-            </div>
-        
-            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        </body>
-        </html>
-        
-        
-        
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
 
         `;
 
