@@ -205,7 +205,7 @@ if (logo) {
           font-size: 30px;
       }
       .custom-description {
-        font-size: 30px; 
+        font-size: 40px; 
     }
         
     </style>
