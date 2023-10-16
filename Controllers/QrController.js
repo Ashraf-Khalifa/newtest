@@ -232,22 +232,23 @@ if (logo) {
         <div class="col-12 text-center custom-footer-text">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <p class="small">The Royal Tank Museum @2023</p>
+                    <p class="larg">The Royal Tank Museum @2023</p>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <a href="https://www.facebook.com/TankMuseumjo" style="color: #0000ff; font-size: 30px;" class="mr-3">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                    <a href="https://twitter.com/TankMuseumJo" style="color: #ffffff; font-size: 30px;" class="mr-3">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="https://www.instagram.com/tankmuseumjo" style="color: #ffffff; font-size: 30px;" class="mr-3">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://rtm.jo" style="color: #ffffff; font-size: 30px;">
-                        <i class="fas fa-globe"></i>
-                    </a>
-                </div>
+                <a href="https://www.facebook.com/TankMuseumjo" style="color: #0000ff; font-size: 50px;" class="mr-3 pl-2">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://twitter.com/TankMuseumJo" style="color: #ffffff; font-size: 50px;" class="mr-3 pl-2">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/tankmuseumjo" style="color: #ffffff; font-size: 50px;" class="mr-3 pl-2">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://rtm.jo" style="color: #ffffff; font-size: 50px;" class="mr-3 pl-2">
+                    <i class="fas fa-globe"></i>
+                </a>
+            </div>
+            
             </div>
         </div>
     </div>
