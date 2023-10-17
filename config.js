@@ -6,7 +6,7 @@ const dbConnection = mysql.createConnection({
   user: "doadmin",
   password: "123.123.",
   database: "defaultdb",
-  ssl: true,
+  keepAlive: true,
 });
 
 dbConnection.connect((err) => {
