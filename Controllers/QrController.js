@@ -221,7 +221,7 @@ if (logo) {
         .custom-description {
             font-size: 40px;
             direction: rtl; 
-            text-align: right;
+            text-align: justify; /* Justify the text */            
         }
         .custom-title{
           font-size: 60px;
