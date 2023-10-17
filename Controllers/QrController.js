@@ -191,9 +191,9 @@ if (logo) {
 
         .custom-footer-background {
             background-color: #BCA464;
-            
+            position: fixed;
             bottom: 0;
-            width: 100%;
+            min-width: 100%;
             border-radius: 30px 30px 0px 0px;
         }
 
@@ -203,6 +203,7 @@ if (logo) {
 
         .custom-text {
             padding: 40px;
+            margin-bottom: 200px;
             
         }
 
