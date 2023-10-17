@@ -184,6 +184,9 @@ if (logo) {
 
 <body>
     <style>
+    .container-fluid{
+      background-color: #BCA464;
+    }
         /* Custom Styles */
         .custom-background {
             background-color: #BCA464;
@@ -204,7 +207,8 @@ if (logo) {
         .custom-text {
             padding: 40px;
             margin-bottom: 200px;
-            
+            border-radius: 30px 30px 0px 0px;
+            background-color: #fff;
         }
 
         .larg {
