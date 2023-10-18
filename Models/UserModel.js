@@ -1,6 +1,41 @@
 const dbConnection = require("../config");
 
 class UserModel {
+
+  static getListOfUsers(callback) {
+    const getUsersQuery = `
+      SELECT * FROM users
+    `;
+
+    dbConnection.query(getUsersQuery, callback);
+  }
+
+  static insertUserInfo(newUser, callback) {
+    const userInfoQuery = `
+      INSERT INTO users (photoUrl, fullName, number, gender, birthdate, nationality, city, password, email, token, verify)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    dbConnection.query(
+      userInfoQuery,
+      [
+        newUser.photoUrl,
+        newUser.fullName,
+        newUser.number,
+        newUser.gender,
+        newUser.birthdate,
+        newUser.nationality,
+        newUser.city,
+        newUser.password,
+        newUser.email,
+        newUser.token,
+        newUser.verify,
+      ],
+      callback
+    );
+  }
+
+
   static getUserById(userId, callback) {
     const getUserQuery = `
       SELECT * FROM users

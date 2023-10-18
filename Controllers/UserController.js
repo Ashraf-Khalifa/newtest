@@ -7,17 +7,65 @@ class UserController {
     UserModel.getUserById(userId, (err, results) => {
       if (err) {
         console.error("Database Error:", err);
-        return res.status(500).json({ message: "An error occurred" });
+        res.status(500).json({
+          data: null,
+          success: false,
+          errors: { message: "An error occurred" },
+        });
+      } else if (results.length === 0) {
+        res.status(404).json({
+          data: null,
+          success: false,
+          errors: { message: "User not found" },
+        });
+      } else {
+        const user = results[0];
+        res.status(200).json({
+          data: user,
+          success: true,
+          errors: {},
+        });
       }
+    });
+  }
 
-      if (results.length === 0) {
-        return res.status(404).json({ message: "User not found" });
+  static async getUserList(req, res) {
+    UserModel.getListOfUsers((err, results) => {
+      if (err) {
+        console.error("Database Error:", err);
+        res.status(500).json({
+          data: null,
+          success: false,
+          errors: { message: "An error occurred" },
+        });
+      } else {
+        res.status(200).json({
+          data: results,
+          success: true,
+          errors: {},
+        });
       }
+    });
+  }
 
-      const user = results[0];
-      return res
-        .status(200)
-        .json({ message: "User retrieved successfully", user });
+  static async addUser(req, res) {
+    const newUser = req.body;
+
+    UserModel.insertUserInfo(newUser, (err, results) => {
+      if (err) {
+        console.error("Database Error:", err);
+        res.status(500).json({
+          data: null,
+          success: false,
+          errors: { message: "An error occurred" },
+        });
+      } else {
+        res.status(201).json({
+          data: { id: results.insertId, ...newUser },
+          success: true,
+          errors: {},
+        });
+      }
     });
   }
 
@@ -28,14 +76,24 @@ class UserController {
     UserModel.updateUserById(userId, updatedData, (err, results) => {
       if (err) {
         console.error("Database Error:", err);
-        return res.status(500).json({ message: "An error occurred" });
+        res.status(500).json({
+          data: null,
+          success: false,
+          errors: { message: "An error occurred" },
+        });
+      } else if (results.affectedRows === 0) {
+        res.status(404).json({
+          data: null,
+          success: false,
+          errors: { message: "User not found" },
+        });
+      } else {
+        res.status(200).json({
+          data: null,
+          success: true,
+          errors: {},
+        });
       }
-
-      if (results.affectedRows === 0) {
-        return res.status(404).json({ message: "User not found" });
-      }
-
-      return res.status(200).json({ message: "User updated successfully" });
     });
   }
 
@@ -45,34 +103,43 @@ class UserController {
     UserModel.deleteUserById(userId, (err, results) => {
       if (err) {
         console.error("Database Error:", err);
-        return res.status(500).json({ message: "An error occurred" });
+        res.status(500).json({
+          data: null,
+          success: false,
+          errors: { message: "An error occurred" },
+        });
+      } else if (results.affectedRows === 0) {
+        res.status(404).json({
+          data: null,
+          success: false,
+          errors: { message: "User not found" },
+        });
+      } else {
+        res.status(200).json({
+          data: null,
+          success: true,
+          errors: {},
+        });
       }
-
-      if (results.affectedRows === 0) {
-        return res.status(404).json({ message: "User not found" });
-      }
-
-      return res.status(200).json({ message: "User deleted successfully" });
     });
   }
-
 
   static async countUsers(req, res) {
     UserModel.countUsers((err, count) => {
       if (err) {
         console.error("Database Error:", err);
-        return res.status(500).json({
+        res.status(500).json({
           data: null,
           success: false,
           errors: { message: "An error occurred" },
         });
+      } else {
+        res.status(200).json({
+          data: count,
+          success: true,
+          errors: {},
+        });
       }
-  
-      return res.status(200).json({
-        data: count,
-        success: true,
-        errors: {},
-      });
     });
   }
 }

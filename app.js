@@ -26,6 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Include and use your routes here
 const authRoutes = require("./Routes/authRoutes");
+
 const userRoutes = require("./Routes/userRoutes");
 const galleryRoutes = require("./Routes/galleryRoutes"); // Updated route for gallery
 const eventRoutes = require("./Routes/eventRoutes");
@@ -37,8 +38,11 @@ const iconsRoutes = require("./Routes/IconsRoutes");
 const backgroundRoutes = require("./Routes/BackgroundRoutes");
 const aboutRoutes = require("./Routes/AboutRoutes");
 const qrRoutes = require("./Routes/QrRoutes");
+const adminRoutes = require("./Routes/superadmin");
+
 
 app.use("/auth", authRoutes);
+
 app.use("/user", userRoutes);
 app.use("/gallery", galleryRoutes); // Updated route for gallery
 app.use("/event", eventRoutes);
@@ -50,6 +54,7 @@ app.use("/icons", iconsRoutes);
 app.use("/background", backgroundRoutes);
 app.use("/about", aboutRoutes);
 app.use("/qr", qrRoutes);
+app.use("/admin", adminRoutes);
 
 // Serve static audio and video files
 app.use("/audio", express.static(path.join(__dirname, "audio")));
