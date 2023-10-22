@@ -21,7 +21,7 @@ app.options("*", cors()); // Enable CORS for all routes that support OPTIONS
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(cors());
+
 // ... Your existing code ...
 
 // Include and use your routes here

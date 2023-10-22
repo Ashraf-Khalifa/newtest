@@ -10,11 +10,38 @@ class SuperadminController {
   async signup(req, res) {
     const { email, password, role } = req.body;
   
-    if (!email || !password || role === undefined) {
-      return res.status(400).json({ message: 'Email, password, and role are required.' });
+    if (!password || role === undefined) {
+      return res.status(400).json({ message: 'Password and role are required.' });
+    }
+  
+    // Regular expression for validating email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+    if (!email || !emailRegex.test(email)) {
+      return res.status(400).json({ message: 'Invalid email format.' });
+    }
+  
+    // Regular expression for password validation
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}[a-zA-Z]$/;  
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        message: 'Password must be at least 8 characters long, contain at least one capital letter, at least one number, and end with a letter.',
+      });
+    }
+  
+    // Check if the role is either 0 or 1
+    if (role !== 0 && role !== 1) {
+      return res.status(400).json({ message: 'Role must be either 0 or 1.' });
     }
   
     try {
+      // Check if the email already exists in the database
+      const existingUser = await SuperadminModel.findByEmail(email);
+      if (existingUser) {
+        return res.status(400).json({ message: 'Email already exists. Please use a different email.' });
+      }
+  
+      // If the email is unique, the role is valid, and the password format is correct, proceed with user creation
       const hashedPassword = await bcrypt.hash(password, 10);
       const newUser = {
         email,
@@ -29,6 +56,10 @@ class SuperadminController {
       res.status(500).json({ message: 'Failed to create superadmin.' });
     }
   }
+  
+  
+  
+  
   
   
   async login(req, res) {
