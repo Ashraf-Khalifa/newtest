@@ -6,4 +6,5 @@ router.post('/signup', superadmin.signup);
 router.post('/login', superadmin.login);
 router.post('/logout', superadmin.logout);
 
+
 module.exports = router;
