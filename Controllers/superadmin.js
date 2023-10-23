@@ -111,6 +111,71 @@ class SuperadminController {
     }
   }
 
+  async getAllSuperadmins(req, res) {
+    try {
+      // Fetch all superadmin records from the database
+      const superadmins = await SuperadminModel.getAllSuperadmins();
+      res.status(200).json(superadmins);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error.' });
+    }
+  }
+  async updateSuperadmin(req, res) {
+    const superadminId = req.params.id;
+    const { email, password, role } = req.body;
+  
+    if (!email || !password || role === undefined) {
+      return res.status(400).json({ message: 'Invalid input data.' });
+    }
+  
+    try {
+      // Check if the superadmin with the given id exists in the database
+      const existingSuperadmin = await SuperadminModel.getSuperadminById(superadminId);
+      if (!existingSuperadmin) {
+        return res.status(404).json({ message: 'Superadmin not found.' });
+      }
+  
+      // Update the superadmin's information
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const updatedData = {
+        email,
+        password: hashedPassword,
+        role,
+      };
+  
+      await SuperadminModel.updateSuperadmin(superadminId, updatedData);
+  
+      res.status(200).json({ message: 'Superadmin updated.' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to update superadmin.' });
+    }
+  }
+  
+
+  async deleteSuperadmin(req, res) {
+    const superadminId = req.params.id;
+  
+    try {
+      // Check if the superadmin with the given ID exists in the database
+      const existingSuperadmin = await SuperadminModel.getSuperadminById(superadminId);
+      if (!existingSuperadmin) {
+        return res.status(404).json({ message: 'Superadmin not found.' });
+      }
+  
+      // Delete the superadmin from the database
+      await SuperadminModel.deleteSuperadmin(superadminId);
+  
+      res.status(200).json({ message: 'Superadmin deleted.' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to delete superadmin.' });
+    }
+  }
+  
+  
+  
   
 }
 

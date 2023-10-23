@@ -238,14 +238,18 @@ if (logo) {
         <div class="row custom-text">
             <div class="col-12 text-center">
                 ${title ? `<h1 class="px-4 custom-title">${title}</h1>` : ''}<br>
-                ${description ? `<p class="px-4 custom-description">${description}</p>` : ''}<br>
+                ${description ? `<p class="px-4 custom-description">${description}</p>` : ''}<br> <hr>
                 ${audioSrc ? `
+                <p>Audio recording</p>
                 <audio controls style="width: 100%;">
                     <source src="${audioSrc}" type="audio/mpeg">
                     Your browser does not support the audio element.
-                </audio>` : ''}<br>
-                ${imageSrc ? `<img src="${imageSrc}" alt="Image">` : ''}<br>
+                </audio>` : ''}<br><hr>
+                ${imageSrc ? `
+                <p>Museum photos</p>
+                <img src="${imageSrc}" alt="Image">` : ''}<br><hr>
                 ${videoSrc ? `
+                <p>Museum videos</p>
                 <video controls style="width: 100%; height: auto;">
                     <source src="${videoSrc}" type="video/mp4">
                     Your browser does not support the video element.

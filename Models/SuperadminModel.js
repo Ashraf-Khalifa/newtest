@@ -61,7 +61,61 @@ class SuperadminModel {
         });
       });
     }
- 
+
+    getAllSuperadmins() {
+      return new Promise((resolve, reject) => {
+        dbConnection.query('SELECT * FROM superadmin', (error, results) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+    }
+
+    updateSuperadmin(superadminId, updatedData) {
+      return new Promise((resolve, reject) => {
+        dbConnection.query(
+          'UPDATE superadmin SET email = ?, password = ?, role = ? WHERE id = ?',
+          [updatedData.email, updatedData.password, updatedData.role, superadminId],
+          (error, results) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(results);
+            }
+          }
+        );
+      });
+    }
+
+    getSuperadminById(superadminId) {
+      return new Promise((resolve, reject) => {
+        dbConnection.query('SELECT * FROM superadmin WHERE id = ?', superadminId, (error, results) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(results[0]);
+          }
+        });
+      });
+    }
+    
+    deleteSuperadmin(superadminId) {
+      return new Promise((resolve, reject) => {
+        dbConnection.query('DELETE FROM superadmin WHERE id = ?', superadminId, (error, results) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+    }
+    
+
+
   }
   
   module.exports = new SuperadminModel();
