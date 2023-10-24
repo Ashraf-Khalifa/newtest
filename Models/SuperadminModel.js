@@ -3,8 +3,7 @@ const dbConnection = require("../config");
 class SuperadminModel {
   createSuperadmin(superadminData) {
     return new Promise((resolve, reject) => {
-      dbConnection.query('INSERT INTO superadmin SET email = ?, password = ?, role = ?', [superadminData.email, superadminData.password, superadminData.role], (error, results) => {
-        if (error) {
+      dbConnection.query('INSERT INTO superadmin SET email = ?, password = ?, role = ?', [superadminData.email, superadminData.password, superadminData.role === 'admin' ? 'admin' : 'standard'], (error, results) => {        if (error) {
           reject(error);
         } else {
           resolve(results);
@@ -78,7 +77,7 @@ class SuperadminModel {
       return new Promise((resolve, reject) => {
         dbConnection.query(
           'UPDATE superadmin SET email = ?, password = ?, role = ? WHERE id = ?',
-          [updatedData.email, updatedData.password, updatedData.role, superadminId],
+          [updatedData.email, updatedData.password, updatedData.role === 'admin' ? 'admin' : 'standard', superadminId],
           (error, results) => {
             if (error) {
               reject(error);
@@ -89,6 +88,7 @@ class SuperadminModel {
         );
       });
     }
+    
 
     getSuperadminById(superadminId) {
       return new Promise((resolve, reject) => {

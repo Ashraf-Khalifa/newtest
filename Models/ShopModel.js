@@ -9,7 +9,7 @@ class ShopModel {
 
     dbConnection.query(
       insertItemQuery,
-      [JSON.stringify(image), title, price, content],
+      [image, title, price, content],
       callback
     );
   }

@@ -10,6 +10,19 @@ class EventController {
     // Extract data from the request
     const { title, date, content } = req.body;
     console.log("Received data:", title, date, content);
+    console.log("Received date:", date);
+
+    // Parse the date into a JavaScript Date object
+    const parsedDate = new Date(date);
+
+    // Get the components of the date (year, month, day)
+    const year = parsedDate.getFullYear();
+    const month = (parsedDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed, so add 1
+    const day = parsedDate.getDate().toString().padStart(2, '0');
+
+    // Format the date in "YYYY-MM-DD" format
+    const formattedDate = `${year}-${month}-${day}`;
+
 
     const images = req.files; // Use req.files to get an array of uploaded images
 
@@ -31,7 +44,7 @@ class EventController {
     const processImage = (index) => {
         if (index === images.length) {
             // All images have been processed, insert event data into the database
-            EventModel.addEvent(imagePaths, title, date, content, (err, result) => {
+            EventModel.addEvent(imagePaths, title, formattedDate, content, (err, result) => {
                 if (err) {
                     const errorMessage = "Error adding event to the database";
                     console.error(errorMessage, err);

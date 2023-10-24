@@ -7,12 +7,9 @@ class EventModel {
       VALUES (?, ?, ?, ?)
     `;
 
-    dbConnection.query(
-      insertEventQuery,
-      [JSON.stringify(imagePath), title, date, content],
-      callback
-    );
-  }
+    dbConnection.query(insertEventQuery, [imagePath, title, date, content], callback);
+}
+
 
   static getEvents(callback) {
     const selectEventsQuery = `

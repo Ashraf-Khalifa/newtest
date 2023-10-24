@@ -26,7 +26,7 @@ class SuperadminController {
       const newUser = {
         email,
         password: hashedPassword,
-        role, // Store the role in the database
+        role: role === 'admin' ? 'admin' : 'standard', // Store 'admin' or 'standard' as a string      
       };
   
       await SuperadminModel.createSuperadmin(newUser);
@@ -141,8 +141,8 @@ class SuperadminController {
       const updatedData = {
         email,
         password: hashedPassword,
-        role,
-      };
+        role: role === 'admin' ? 'admin' : 'standard', // Store 'admin' or 'standard' as a string
+            };
   
       await SuperadminModel.updateSuperadmin(superadminId, updatedData);
   

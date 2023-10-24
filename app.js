@@ -61,7 +61,7 @@ app.use("/audio", express.static(path.join(__dirname, "audio")));
 app.use("/video", express.static(path.join(__dirname, "video")));
 app.use("/logo", express.static(path.join(__dirname, "logo")));
 app.use("/image", express.static(path.join(__dirname, "image")));
-
+app.use("/uploads", express.static(path.join(__dirname, "")));
 
 
 
@@ -79,6 +79,9 @@ app.use((err, req, res, next) => {
   console.error(err);
   res.status(err.status || 500).json({ message: err.message });
 });
+
+
+
 
 const PORT = process.env.PORT || 3005;
 

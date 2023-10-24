@@ -21,7 +21,7 @@ class GalleryController {
     const imageFileName = `${timestamp}.png`;
 
     // Define the file path to save the uploaded image
-    const imagePath = `uploads/${imageFileName}`;
+   const imagePath = `${imageFileName}`;
 
     // Write the image buffer to the server's file system
     fs.writeFile(imagePath, imageBuffer, (err) => {

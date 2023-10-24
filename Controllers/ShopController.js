@@ -36,8 +36,10 @@ class ShopController {
         });
       }
 
+      const priceWithJD = `${price} JD`;
+
       // Add the item to the database with the image path
-      ShopModel.addItem(imagePath, title, price, content, (err, result) => {
+      ShopModel.addItem(imagePath, title, priceWithJD, content, (err, result) => {
         if (err) {
           const errorMessage = "Error adding item to the database";
           console.error(errorMessage, err);
@@ -51,7 +53,7 @@ class ShopController {
         console.log("Item added successfully");
         const itemData = {
           title,
-          price,
+          price: priceWithJD,
           content,
           image_path: imagePath,
         };
@@ -66,44 +68,50 @@ class ShopController {
 
   static getItems(req, res) {
     ShopModel.getItems((err, results) => {
-      if (err) {
-        console.error("MySQL Error:", err);
-        return res.status(500).json({
-          data: null,
-          success: false,
-          errors: { message: "Error retrieving items" },
+        if (err) {
+            console.error("MySQL Error:", err);
+            return res.status(500).json({
+                data: null,
+                success: false,
+                errors: { message: "Error retrieving items" },
+            });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({
+                data: [],
+                success: true,
+                errors: {},
+            });
+        }
+
+        const itemDetailsArray = results.map((item) => {
+            // Parse the JSON string to get the image path
+            const imageFilename = item.image; 
+            
+            // Assuming the filename is stored in the database
+            
+            const imagePath = `/uploads/${imageFilename}`;
+
+            const itemDetails = {
+                id: item.id,
+                title: item.title,
+                price: item.price,
+                content: item.content,
+                image_path: imagePath,
+            };
+
+            return itemDetails;
         });
-      }
 
-      if (results.length === 0) {
-        return res.status(404).json({
-          data: [],
-          success: true,
-          errors: {},
+        return res.status(200).json({
+            data: itemDetailsArray,
+            success: true,
+            errors: {},
         });
-      }
-
-      const itemDetailsArray = [];
-
-      results.forEach((item) => {
-        const itemDetails = {
-          id: item.id,
-          title: item.title,
-          price: item.price,
-          content: item.content,
-          image_path: item.image_path,
-        };
-
-        itemDetailsArray.push(itemDetails);
-      });
-
-      return res.status(200).json({
-        data: itemDetailsArray,
-        success: true,
-        errors: {},
-      });
     });
-  }
+}
+
 
   static deleteItem(req, res) {
     const itemId = parseInt(req.params.itemId, 10);
@@ -176,11 +184,12 @@ class ShopController {
           // No item found with the specified ID
           return res.status(404).json({ message: "Item not found" });
         }
-
+        const priceWithJD = `${price} JD`;
+        
         console.log("Item updated successfully");
         const itemData = {
           title,
-          price,
+          price: priceWithJD,
           content,
           image_path: imagePath,
         };
